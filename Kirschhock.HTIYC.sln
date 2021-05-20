@@ -1,0 +1,57 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31229.75
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kirschhock.HTIYC", "Kirschhock.HTIYC\Kirschhock.HTIYC.csproj", "{48DB6A66-944F-4974-A82B-4C3CEB398796}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "00  Common", "00  Common", "{E446730A-71A7-4BE0-9A6C-55D090FEEACF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01 Domain", "01 Domain", "{61F4F911-FA8D-464A-848D-F546B98807A0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02 Infrastructure", "02 Infrastructure", "{F563AACE-C62B-4030-8B9D-62000FDAB91E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "03 Hosts", "03 Hosts", "{40B2C547-2218-4D65-B64E-7D6BBF280BE9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kirschhock.HTIYC.Domain", "Kirschhock.HTIYC.Domain\Kirschhock.HTIYC.Domain.csproj", "{0B16AB74-013E-44F2-A1CB-46CE77C0C413}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kirschhock.HTIYC.Common", "Kirschhock.HTIYC.Common\Kirschhock.HTIYC.Common.csproj", "{AA37AB53-42DE-4428-9B2D-2B609169CD1D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kirschhock.HTIYC.Infrastructure", "Kirschhock.HTIYC.Infrastructure\Kirschhock.HTIYC.Infrastructure.csproj", "{9EAB8FA2-B454-4863-BF66-97A2988622CA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{48DB6A66-944F-4974-A82B-4C3CEB398796}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{48DB6A66-944F-4974-A82B-4C3CEB398796}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{48DB6A66-944F-4974-A82B-4C3CEB398796}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{48DB6A66-944F-4974-A82B-4C3CEB398796}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0B16AB74-013E-44F2-A1CB-46CE77C0C413}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0B16AB74-013E-44F2-A1CB-46CE77C0C413}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0B16AB74-013E-44F2-A1CB-46CE77C0C413}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0B16AB74-013E-44F2-A1CB-46CE77C0C413}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AA37AB53-42DE-4428-9B2D-2B609169CD1D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA37AB53-42DE-4428-9B2D-2B609169CD1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA37AB53-42DE-4428-9B2D-2B609169CD1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA37AB53-42DE-4428-9B2D-2B609169CD1D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9EAB8FA2-B454-4863-BF66-97A2988622CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9EAB8FA2-B454-4863-BF66-97A2988622CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9EAB8FA2-B454-4863-BF66-97A2988622CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9EAB8FA2-B454-4863-BF66-97A2988622CA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{48DB6A66-944F-4974-A82B-4C3CEB398796} = {40B2C547-2218-4D65-B64E-7D6BBF280BE9}
+		{0B16AB74-013E-44F2-A1CB-46CE77C0C413} = {61F4F911-FA8D-464A-848D-F546B98807A0}
+		{AA37AB53-42DE-4428-9B2D-2B609169CD1D} = {E446730A-71A7-4BE0-9A6C-55D090FEEACF}
+		{9EAB8FA2-B454-4863-BF66-97A2988622CA} = {F563AACE-C62B-4030-8B9D-62000FDAB91E}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {50201D83-CD32-4275-A6F7-D87D08700BE2}
+	EndGlobalSection
+EndGlobal

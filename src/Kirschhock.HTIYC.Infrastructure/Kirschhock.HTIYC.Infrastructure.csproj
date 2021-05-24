@@ -14,4 +14,8 @@
     <ProjectReference Include="..\Kirschhock.HTIYC.Domain\Kirschhock.HTIYC.Domain.csproj" />
     <ProjectReference Include="..\Kirschhock.HTIYC.Common\Kirschhock.HTIYC.Common.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Topics\Queries\" />
+  </ItemGroup>
 </Project>

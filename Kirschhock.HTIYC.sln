@@ -13,11 +13,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02 Infrastructure", "02 Inf
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "03 Hosts", "03 Hosts", "{40B2C547-2218-4D65-B64E-7D6BBF280BE9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kirschhock.HTIYC.Domain", "src\Kirschhock.HTIYC.Domain\Kirschhock.HTIYC.Domain.csproj", "{0B16AB74-013E-44F2-A1CB-46CE77C0C413}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kirschhock.HTIYC.Domain", "src\Kirschhock.HTIYC.Domain\Kirschhock.HTIYC.Domain.csproj", "{0B16AB74-013E-44F2-A1CB-46CE77C0C413}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kirschhock.HTIYC.Common", "src\Kirschhock.HTIYC.Common\Kirschhock.HTIYC.Common.csproj", "{AA37AB53-42DE-4428-9B2D-2B609169CD1D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kirschhock.HTIYC.Common", "src\Kirschhock.HTIYC.Common\Kirschhock.HTIYC.Common.csproj", "{AA37AB53-42DE-4428-9B2D-2B609169CD1D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kirschhock.HTIYC.Infrastructure", "src\Kirschhock.HTIYC.Infrastructure\Kirschhock.HTIYC.Infrastructure.csproj", "{9EAB8FA2-B454-4863-BF66-97A2988622CA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kirschhock.HTIYC.Infrastructure", "src\Kirschhock.HTIYC.Infrastructure\Kirschhock.HTIYC.Infrastructure.csproj", "{9EAB8FA2-B454-4863-BF66-97A2988622CA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

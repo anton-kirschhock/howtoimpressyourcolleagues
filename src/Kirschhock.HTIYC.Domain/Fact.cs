@@ -11,9 +11,7 @@ namespace Kirschhock.HTIYC.Domain
         private string title;
         private string description;
         private string readMoreLink;
-
         public int Id { get; set; }
-
         public string Name { get; protected set; }
 
         public string Title
@@ -78,7 +76,7 @@ namespace Kirschhock.HTIYC.Domain
 
         protected async void NotifyPropertyChanged()
         {
-            await DomainEventManager.RaiseEvent(new UpdateFactCommand(Topic, this));
+            await DomainEventManager.RaiseEventAsync(new UpdateFactCommand(Topic, this));
         }
     }
 }

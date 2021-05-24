@@ -1,7 +1,7 @@
 ﻿using System;
-
+using Kirschhock.HTIYC.Domain;
 using Kirschhock.HTIYC.Infrastructure.Configuration;
-
+using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Kirschhock.HTIYC.Infrastructure
@@ -12,7 +12,10 @@ namespace Kirschhock.HTIYC.Infrastructure
                                                            Action<DatabaseConfiguration> configureDatabase
             )
         {
-
+            serviceDescriptors.AddDomain();
+            
+            serviceDescriptors.AddMediatR(typeof(InfrastructureModule).Assembly,
+                                          typeof(DomainModule).Assembly);
             return serviceDescriptors;
         }
     }

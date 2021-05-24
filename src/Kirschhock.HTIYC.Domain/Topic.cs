@@ -59,7 +59,7 @@ namespace Kirschhock.HTIYC.Domain
         {
             var fact = new Fact(this, name, title);
             Facts.Add(fact);
-            await DomainEventManager.RaiseEvent(new AddFactCommand(this, fact));
+            await DomainEventManager.RaiseEventAsync(new AddFactCommand(this, fact));
             return fact;
         }
 
@@ -69,14 +69,24 @@ namespace Kirschhock.HTIYC.Domain
             if (fact != null)
             {
                 Facts.Remove(fact);
-                await DomainEventManager.RaiseEvent(new RemoveFactCommand(this, fact));
+                await DomainEventManager.RaiseEventAsync(new RemoveFactCommand(this, fact));
             }
             return fact;
         }
 
         protected async void NotifyPropertyChanged()
         {
-            await DomainEventManager.RaiseEvent(new UpdateTopicCommand(this));
+            await DomainEventManager.RaiseEventAsync(new UpdateTopicCommand(this));
+        }
+
+        /// <summary>
+        /// Creates a new <see cref="Topic"/> And raises the correlated event(s)
+        /// </summary>
+        public static async Task<Topic> NewTopic(string displayName)
+        {
+            var topic = new Topic(displayName);
+            await DomainEventManager.RaiseEventAsync(new AddTopicCommand(topic));
+            return topic;
         }
     }
 }

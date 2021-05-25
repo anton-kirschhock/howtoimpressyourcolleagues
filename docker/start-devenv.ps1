@@ -1,0 +1,1 @@
+docker-compose -p HTIYC -f .\docker-compose.dev.yaml --env-file ./.env.dev up

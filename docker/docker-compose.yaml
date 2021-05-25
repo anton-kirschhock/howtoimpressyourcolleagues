@@ -1,1 +1,34 @@
-# TODO: Compose file for  hosting the full app
+version: '3.7'
+
+volumes:
+    mongodata:
+
+services:
+    app:
+        dockerfile: ./../src/Kirschhock.HTIYC
+        ports:
+            - 5000:5000
+        environment: 
+            - Database__ConnectionString: mongodb://localhost:27017/htiyc
+        depends_on: 
+            - mongo
+    mongo:
+        image: mongo
+        restart: always
+        environment:
+            MONGO_INITDB_ROOT_USERNAME: root
+            MONGO_INITDB_ROOT_PASSWORD: ${PASSWORD}
+        volumes:
+            - mongodata:/data/db
+        ports:
+            - 27017:27017
+    mongo-express:
+        image: mongo-express
+        restart: always
+        ports:
+            - 8081:8081
+        environment: 
+            ME_CONFIG_MONGODB_ADMINUSERNAME: root
+            ME_CONFIG_MONGODB_ADMINPASSWORD: ${PASSWORD}
+        depends_on: 
+            - mongo

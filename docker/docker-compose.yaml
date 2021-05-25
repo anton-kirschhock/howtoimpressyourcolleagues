@@ -9,7 +9,8 @@ services:
         ports:
             - 5000:5000
         environment: 
-            - Database__ConnectionString: mongodb://localhost:27017/htiyc
+            - Database__ConnectionString: mongodb://localhost:27017
+            - Database__DatabaseName: htiyc
         depends_on: 
             - mongo
     mongo:

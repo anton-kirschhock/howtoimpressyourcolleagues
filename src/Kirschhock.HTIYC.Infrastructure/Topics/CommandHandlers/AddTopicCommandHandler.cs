@@ -8,6 +8,11 @@ namespace Kirschhock.HTIYC.Infrastructure.Topics.CommandHandlers
 {
     internal class AddTopicCommandHandler : ICommandHandler<AddTopicCommand>
     {
+        public AddTopicCommandHandler()
+        {
+
+        }
+
         public Task Handle(AddTopicCommand notification, CancellationToken cancellationToken)
         {
             throw new System.NotImplementedException();

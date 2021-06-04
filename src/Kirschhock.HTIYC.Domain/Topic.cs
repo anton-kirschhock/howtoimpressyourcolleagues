@@ -1,6 +1,7 @@
 ﻿
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -19,7 +20,7 @@ namespace Kirschhock.HTIYC.Domain
         private string displayName;
         private string description;
 
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public string Name { get; protected set; }
 
         public string DisplayName
@@ -49,8 +50,15 @@ namespace Kirschhock.HTIYC.Domain
 
         public ICollection<Fact> Facts { get; set; } = new List<Fact>();
 
+        /// <summary>
+        /// Used for Mapping Only
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public Topic() { }
+
         public Topic(string displayName)
         {
+            Id = Guid.NewGuid();
             Name = displayName.Replace(" ", "-").ToLower().Normalize();
             DisplayName = displayName;
         }
@@ -62,6 +70,7 @@ namespace Kirschhock.HTIYC.Domain
             await DomainEventManager.RaiseEventAsync(new AddFactCommand(this, fact));
             return fact;
         }
+
 
         public async Task<Fact> RemoveFactByNameAsync(string name)
         {
@@ -88,5 +97,18 @@ namespace Kirschhock.HTIYC.Domain
             await DomainEventManager.RaiseEventAsync(new AddTopicCommand(topic));
             return topic;
         }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public Topic Set(Guid id, string name, string displayName, string description, List<Fact> facts)
+        {
+            Id = id;
+            Name = name;
+            this.displayName = displayName;
+            this.description = description;
+            Facts = facts;
+
+            return this;
+        }
+
     }
 }

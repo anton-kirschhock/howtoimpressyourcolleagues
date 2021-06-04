@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 
 using Kirschhock.HTIYC.Common.Abstractions;
 using Kirschhock.HTIYC.Domain.DomainEvents;
@@ -11,7 +12,7 @@ namespace Kirschhock.HTIYC.Domain
         private string title;
         private string description;
         private string readMoreLink;
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public string Name { get; protected set; }
 
         public string Title
@@ -53,8 +54,13 @@ namespace Kirschhock.HTIYC.Domain
             }
         }
 
-        public Topic Topic { get; set; }
+        public Topic Topic { get; protected set; }
 
+        /// <summary>
+        /// FOR MAPPING ONLY
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public Fact() { }
         /// <summary>
         /// Creates a new fact for a <see cref="Topic"/>
         /// </summary>
@@ -68,7 +74,7 @@ namespace Kirschhock.HTIYC.Domain
 
             if (string.IsNullOrWhiteSpace(title))
                 throw new ArgumentException($"'{nameof(title)}' cannot be null or whitespace.", nameof(title));
-
+            Id = Guid.NewGuid();
             Topic = topic ?? throw new ArgumentNullException(nameof(topic));
             Name = name;
             this.title = title;
@@ -77,6 +83,34 @@ namespace Kirschhock.HTIYC.Domain
         protected async void NotifyPropertyChanged()
         {
             await DomainEventManager.RaiseEventAsync(new UpdateFactCommand(Topic, this));
+        }
+
+        /// <summary>
+        /// ONLY USE DURING MAPPING!
+        /// </summary>
+        /// <param name="topic"></param>
+        /// <param name="id"></param>
+        /// <param name="name"></param>
+        /// <param name="title"></param>
+        /// <param name="description"></param>
+        /// <param name="readMoreLink"></param>
+        /// <returns></returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public Fact Set(Topic topic,
+                        Guid id,
+                        string name,
+                        string title,
+                        string description,
+                        string readMoreLink)
+        {
+            Id = id;
+            Topic = topic;
+            Name = name;
+            this.title = title;
+            this.description = description;
+            this.readMoreLink = readMoreLink;
+
+            return this;
         }
     }
 }

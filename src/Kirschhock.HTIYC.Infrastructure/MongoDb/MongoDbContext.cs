@@ -1,6 +1,11 @@
 ﻿
-using Kirschhock.HTIYC.Domain;
+using System;
+using System.Linq.Expressions;
+using System.Threading;
+using System.Threading.Tasks;
+
 using Kirschhock.HTIYC.Infrastructure.Configuration;
+using Kirschhock.HTIYC.Infrastructure.DbModels;
 
 using Microsoft.Extensions.Options;
 
@@ -13,12 +18,19 @@ namespace Kirschhock.HTIYC.Infrastructure.MongoDb
         public IMongoClient Client { get; }
         public IMongoDatabase Database { get; }
 
-        public IMongoCollection<Topic> Topics => Database.GetCollection<Topic>(nameof(Topic));
+        public IMongoCollection<TopicDTO> Topics => Database.GetCollection<TopicDTO>(nameof(TopicDTO));
+        public IMongoCollection<FactDTO> Facts => Database.GetCollection<FactDTO>(nameof(FactDTO));
+
 
         public MongoDbContext(MongoDbClientFactory clientFactory, IOptions<DatabaseConfiguration> databaseOptions)
         {
             this.Client = clientFactory();
             Database = Client.GetDatabase(databaseOptions.Value.DatabaseName);
         }
+
+        public async Task<TDTO> FindOneAsync<TDTO>(Expression<Func<TDTO, bool>> predicate, CancellationToken cancellationToken = default)
+            => await Database.GetCollection<TDTO>(nameof(TDTO))
+                             .Find(predicate)
+                             .FirstOrDefaultAsync(cancellationToken);
     }
 }

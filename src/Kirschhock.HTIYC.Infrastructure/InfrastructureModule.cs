@@ -2,6 +2,9 @@
 
 using Kirschhock.HTIYC.Domain;
 using Kirschhock.HTIYC.Infrastructure.Configuration;
+using Kirschhock.HTIYC.Infrastructure.DbModels;
+using Kirschhock.HTIYC.Infrastructure.DbModels.Mappings;
+using Kirschhock.HTIYC.Infrastructure.DbModels.Mappings.Abstractions;
 using Kirschhock.HTIYC.Infrastructure.MongoDb;
 
 using MediatR;
@@ -31,8 +34,14 @@ namespace Kirschhock.HTIYC.Infrastructure
             serviceDescriptors.Configure(configureDatabase);
 
             // Configure MediatR
-            serviceDescriptors.AddMediatR(typeof(InfrastructureModule).Assembly,
-                                          typeof(DomainModule).Assembly);
+            serviceDescriptors.AddMediatR(typeof(InfrastructureModule).Assembly);
+
+            // Configure mappers
+            serviceDescriptors.AddScoped<IMapper<Fact, FactDTO>, FactMapper>();
+            serviceDescriptors.AddScoped<IMapper<FactDTO, Fact>, FactMapper>();
+
+            serviceDescriptors.AddScoped<IMapper<Topic, TopicDTO>, TopicMapper>();
+            serviceDescriptors.AddScoped<IMapper<TopicDTO, Topic>, TopicMapper>();
 
             // Add own modules
             serviceDescriptors.AddDomain();

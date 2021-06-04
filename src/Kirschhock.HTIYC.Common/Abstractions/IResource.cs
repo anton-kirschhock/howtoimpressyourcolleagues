@@ -1,7 +1,9 @@
-﻿namespace Kirschhock.HTIYC.Common.Abstractions
+﻿using System;
+
+namespace Kirschhock.HTIYC.Common.Abstractions
 {
     public interface IResource
     {
-        int Id { get; }
+        Guid Id { get; }
     }
 }

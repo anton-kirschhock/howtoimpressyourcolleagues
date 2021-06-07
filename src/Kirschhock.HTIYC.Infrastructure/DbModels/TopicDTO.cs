@@ -4,13 +4,12 @@ using System.Collections.Generic;
 using Kirschhock.HTIYC.Common.Abstractions;
 
 using MongoDB.Bson.Serialization.Attributes;
-using MongoDB.Bson.Serialization.IdGenerators;
 
 namespace Kirschhock.HTIYC.Infrastructure.DbModels
 {
     public class TopicDTO : IResource
     {
-        [BsonId(IdGenerator = typeof(GuidGenerator))]
+        [BsonId]
         public Guid Id { get; set; }
         public string Name { get; set; }
         public string DisplayName { get; set; }

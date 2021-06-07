@@ -11,6 +11,7 @@ namespace Kirschhock.HTIYC.Infrastructure.DbModels.Mappings
 {
     internal class TopicMapper : IMapper<Topic, TopicDTO>, IMapper<TopicDTO, Topic>
     {
+        public const string ResolveFacts = "ResolveFacts";
         private readonly MongoDbContext context;
         private readonly IMapper<FactDTO, Fact> factDtoMapper;
 
@@ -33,7 +34,7 @@ namespace Kirschhock.HTIYC.Infrastructure.DbModels.Mappings
 
         public async Task<Topic> MapAsync(TopicDTO source, params KeyValuePair<string, object>[] args)
         {
-            var resolveFacts = args?.Any(e => e.Key == "ResolveFacts" && e.Value is bool val && val) ?? false;
+            var resolveFacts = args?.Any(e => e.Key == ResolveFacts && e.Value is bool val && val) ?? false;
             var res = new Topic();
             List<Fact> facts = null;
             if (resolveFacts)
@@ -42,7 +43,7 @@ namespace Kirschhock.HTIYC.Infrastructure.DbModels.Mappings
                     var factDto = await context.FindOneAsync<FactDTO>(f => f.Id == factId);
                     var fact = await factDtoMapper.MapAsync(
                          factDto,
-                         new KeyValuePair<string, object>("Topic", res)
+                         new KeyValuePair<string, object>(FactMapper.UseTopic, res)
                       );
 
                     facts.Add(fact);

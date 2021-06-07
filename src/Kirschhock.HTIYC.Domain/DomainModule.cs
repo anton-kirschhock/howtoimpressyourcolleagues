@@ -1,4 +1,9 @@
+using System;
+
 using Kirschhock.HTIYC.Domain.DomainEvents;
+
+using MediatR;
+
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Kirschhock.HTIYC.Domain
@@ -9,8 +14,9 @@ namespace Kirschhock.HTIYC.Domain
         {
             DomainEventManager.MediatorResolver = () =>
             {
-                // TODO
-                throw new System.NotImplementedException();
+                var sp = serviceDescriptors.BuildServiceProvider().GetRequiredService<IServiceProvider>();
+
+                return sp.GetRequiredService<IMediator>();
             };
 
             return serviceDescriptors;

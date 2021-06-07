@@ -349,3 +349,4 @@ MigrationBackup/
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
 /docker/.env.dev
+/Kirschhock.HTIYC.Infrastructure.IntegrationTests/TestConfiguration.json

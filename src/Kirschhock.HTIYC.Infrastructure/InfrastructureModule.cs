@@ -37,11 +37,15 @@ namespace Kirschhock.HTIYC.Infrastructure
             serviceDescriptors.AddMediatR(typeof(InfrastructureModule).Assembly);
 
             // Configure mappers
-            serviceDescriptors.AddScoped<IMapper<Fact, FactDTO>, FactMapper>();
-            serviceDescriptors.AddScoped<IMapper<FactDTO, Fact>, FactMapper>();
+            serviceDescriptors.AddScoped<IMapper<Fact, FactDTO>, SimpleFactMapper>();
+            serviceDescriptors.AddScoped<IMapper<FactDTO, Fact>, SimpleFactMapper>();
+            serviceDescriptors.AddScoped<ISimpleFactMapper, SimpleFactMapper>();
+            serviceDescriptors.AddScoped<IComplexFactMapper, ComplexFactMapper>();
 
-            serviceDescriptors.AddScoped<IMapper<Topic, TopicDTO>, TopicMapper>();
-            serviceDescriptors.AddScoped<IMapper<TopicDTO, Topic>, TopicMapper>();
+            serviceDescriptors.AddScoped<IMapper<Topic, TopicDTO>, SimpleTopicMapper>();
+            serviceDescriptors.AddScoped<IMapper<TopicDTO, Topic>, SimpleTopicMapper>();
+            serviceDescriptors.AddScoped<ISimpleTopicMapper, SimpleTopicMapper>();
+            serviceDescriptors.AddScoped<IComplexTopicMapper, ComplexTopicMapper>();
 
             // Add own modules
             serviceDescriptors.AddDomain();

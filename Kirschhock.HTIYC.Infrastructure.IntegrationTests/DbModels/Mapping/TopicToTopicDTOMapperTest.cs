@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 
 using Kirschhock.HTIYC.Domain;
-using Kirschhock.HTIYC.Infrastructure.DbModels;
 using Kirschhock.HTIYC.Infrastructure.DbModels.Mappings.Abstractions;
 
 using Microsoft.Extensions.DependencyInjection;
@@ -21,20 +20,19 @@ namespace Kirschhock.HTIYC.Infrastructure.IntegrationTests.DbModels.Mapping
             this.fixture = fixture;
         }
 
-        [Theory, MemberData(nameof(TestMapOneSingleTopicData))]
-        public async Task TestMapOneSingleTopic(Topic topicToMap)
+        [Theory, MemberData(nameof(InMemoryTopicTestData))]
+        public async Task TestSimpleMapTopic(Topic topicToMap)
         {
-            var mapper = fixture.ServiceProvider.GetRequiredService<IMapper<Topic, TopicDTO>>();
+            var mapper = fixture.ServiceProvider.GetRequiredService<ISimpleTopicMapper>();
             var dto = await mapper.MapAsync(topicToMap);
 
             Assert.Equal(topicToMap.Id, dto.Id);
             Assert.Equal(topicToMap.Name, dto.Name);
             Assert.Equal(topicToMap.DisplayName, dto.DisplayName);
             Assert.Equal(topicToMap.Description, dto.Description);
-            Assert.Equal(topicToMap.Facts.Count, dto.Facts.Count);
         }
 
-        public static IEnumerable<object[]> TestMapOneSingleTopicData =>
+        public static IEnumerable<object[]> InMemoryTopicTestData =>
                new List<object[]>
                {
                    new object[] { new Topic().Set(Guid.NewGuid(),"test-1", "Test 1", "Test 1", new List<Fact>()) },

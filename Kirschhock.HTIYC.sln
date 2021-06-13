@@ -21,7 +21,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kirschhock.HTIYC.Infrastruc
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{711E423A-C1F0-4C96-BC9B-E12625191CA3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kirschhock.HTIYC.Infrastructure.IntegrationTests", "Kirschhock.HTIYC.Infrastructure.IntegrationTests\Kirschhock.HTIYC.Infrastructure.IntegrationTests.csproj", "{5925ACE6-1214-4E65-A347-5E009B2D05F1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kirschhock.HTIYC.Infrastructure.IntegrationTests", "Kirschhock.HTIYC.Infrastructure.IntegrationTests\Kirschhock.HTIYC.Infrastructure.IntegrationTests.csproj", "{5925ACE6-1214-4E65-A347-5E009B2D05F1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

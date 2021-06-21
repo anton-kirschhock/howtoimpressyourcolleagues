@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Kirschhock.HTIYC.Domain\Kirschhock.HTIYC.Domain.csproj" />
+    <ProjectReference Include="..\Kirschhock.HTIYC.Infrastructure\Kirschhock.HTIYC.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

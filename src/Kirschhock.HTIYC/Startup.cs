@@ -1,5 +1,6 @@
 
 using Kirschhock.HTIYC.Common;
+using Kirschhock.HTIYC.Infrastructure;
 using Kirschhock.HTIYC.Security;
 
 using Microsoft.AspNetCore.Builder;
@@ -22,8 +23,14 @@ namespace Kirschhock.HTIYC
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services
+            .AddInfrastructure(
+                opt => Configuration.GetSection("Database").Bind(opt)
+            )
+            .AddSecurity(
+                opt => Configuration.GetSection("Security").Bind(opt)
+            );
 
-            services.AddSecurity(opt => Configuration.GetSection("Security").Bind(opt));
             services.AddRazorPages(options =>
             {
                 options.Conventions.AuthorizeAreaFolder("admin", "/", GlobalConstants.Policies.Admin);
@@ -49,7 +56,7 @@ namespace Kirschhock.HTIYC
 
             app.UseRouting();
 
-            app.UseAuthorization();
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

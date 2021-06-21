@@ -17,6 +17,11 @@
     <footer class="border-top footer text-muted">
         <div class="container">
             &copy; @DateTime.Now.Year - Kirschhock
+            <a asp-page="index" asp-area="admin">Admin</a>
+            @if (User?.Identity?.IsAuthenticated ?? false)
+            {
+                <a asp-page="logout">Logout</a>
+            }
         </div>
     </footer>
 

@@ -21,10 +21,13 @@
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "ASPNETCORE_HOSTINGSTARTUPASSEMBLIES": "Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation"
+        "ASPNETCORE_HOSTINGSTARTUPASSEMBLIES": "Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation",
+        "Security__ClientId": "505bdfb9-64f1-4ae1-a23c-4e579752e192",
+        "Security__ClientSecret": "-.15_PgD13Doi3ZH6F99k3.6t7LhzLX_4K",
+        "Security__TenantId": "761c7634-4043-431f-9420-c5e0ab6be936"
       },
       "dotnetRunMessages": "true",
-      "applicationUrl": "https://localhost:5001;http://localhost:5000"
+      "applicationUrl": "http://localhost:5000;https://localhost:5001"
     },
     "Docker": {
       "commandName": "Docker",

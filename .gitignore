@@ -351,3 +351,4 @@ MigrationBackup/
 .ionide/
 /docker/.env.dev
 /Kirschhock.HTIYC.Infrastructure.IntegrationTests/TestConfiguration.json
+/src/Kirschhock.HTIYC/appsettings.development.json

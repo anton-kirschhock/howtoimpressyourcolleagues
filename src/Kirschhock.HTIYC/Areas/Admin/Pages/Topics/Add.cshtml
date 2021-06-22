@@ -3,3 +3,26 @@
 @{
 }
 
+@section TitleContent {
+    Create new Topic
+}
+
+@section Toolbar{
+    <div class="btn-group me-2">
+        <a asp-page="Index" class="btn btn-sm btn-warning">Cancel</a>
+    </div>
+}
+
+<form method="post" class="submittable-form">
+    <div class="form-floating mt-3">
+        <input type="text" class="form-control" asp-for="DisplayName">
+        <label asp-for="DisplayName">Display Name</label>
+    </div>
+
+    <div class="form-floating mt-3">
+        <textarea class="form-control" asp-for="Description" style="height:10em"></textarea>
+        <label asp-for="Description">Description</label>
+    </div>
+
+    <button class="btn btn-success  mt-3">Save</button>
+</form>

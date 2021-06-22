@@ -1,5 +1,6 @@
 
 using Kirschhock.HTIYC.Common;
+using Kirschhock.HTIYC.Domain.DomainEvents;
 using Kirschhock.HTIYC.Infrastructure;
 using Kirschhock.HTIYC.Security;
 
@@ -50,6 +51,12 @@ namespace Kirschhock.HTIYC
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+            app.Use((ctx, next) =>
+            {
+                DomainEventManager.SetResolver(ctx.RequestServices);
+                return next();
+            });
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();

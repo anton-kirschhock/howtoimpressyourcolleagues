@@ -12,13 +12,6 @@ namespace Kirschhock.HTIYC.Domain
     {
         public static IServiceCollection AddDomain(this IServiceCollection serviceDescriptors)
         {
-            DomainEventManager.MediatorResolver = () =>
-            {
-                var sp = serviceDescriptors.BuildServiceProvider().GetRequiredService<IServiceProvider>();
-
-                return sp.GetRequiredService<IMediator>();
-            };
-
             return serviceDescriptors;
         }
     }

@@ -1,8 +1,6 @@
-using System;
 
 using Kirschhock.HTIYC.Domain.DomainEvents;
-
-using MediatR;
+using Kirschhock.HTIYC.Domain.Factories;
 
 using Microsoft.Extensions.DependencyInjection;
 
@@ -12,6 +10,9 @@ namespace Kirschhock.HTIYC.Domain
     {
         public static IServiceCollection AddDomain(this IServiceCollection serviceDescriptors)
         {
+            serviceDescriptors.AddScoped<IDomainEventManager, DomainEventManager>();
+            serviceDescriptors.AddScoped<IAggregateFactory<Topic>, TopicFactory>();
+
             return serviceDescriptors;
         }
     }

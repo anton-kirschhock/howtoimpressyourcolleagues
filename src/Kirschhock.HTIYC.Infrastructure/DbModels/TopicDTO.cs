@@ -15,6 +15,6 @@ namespace Kirschhock.HTIYC.Infrastructure.DbModels
         public string DisplayName { get; set; }
         public string Description { get; set; }
 
-        public ICollection<Guid> Facts { get; set; } = new List<Guid>();
+        public ICollection<FactDTO> Facts { get; set; } = new List<FactDTO>();
     }
 }

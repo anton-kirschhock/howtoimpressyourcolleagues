@@ -1,29 +1,26 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 using MediatR;
 
-using Microsoft.Extensions.DependencyInjection;
-
 namespace Kirschhock.HTIYC.Domain.DomainEvents
 {
-    public static class DomainEventManager
+    internal class DomainEventManager : IDomainEventManager
     {
-        [ThreadStatic]
-        internal static Func<IMediator> MediatorResolver;
+        private readonly IMediator mediator;
 
-        public static async Task RaiseEventAsync<T>(T @event)
-            where T : INotification
-            => await MediatorResolver().Publish(@event);
-
-
-        public static async Task<TResponse> RaiseEventAndWaitAsync<TRequest, TResponse>(TRequest request)
-            where TRequest : IRequest<TResponse>
-            => await MediatorResolver().Send(request);
-
-        public static void SetResolver(IServiceProvider serviceProvider)
+        public DomainEventManager(IMediator mediator)
         {
-            MediatorResolver = () => serviceProvider.GetRequiredService<IMediator>();
+            this.mediator = mediator;
         }
+
+        public async Task RaiseEventAsync<T>(T @event)
+            where T : INotification
+            => await mediator.Publish(@event);
+
+
+        public async Task<TResponse> RaiseEventAndWaitAsync<TRequest, TResponse>(TRequest request)
+            where TRequest : IRequest<TResponse>
+            => await mediator.Send(request);
+
     }
 }

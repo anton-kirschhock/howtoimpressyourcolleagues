@@ -19,6 +19,7 @@ namespace Kirschhock.HTIYC.Domain
     {
         private string displayName;
         private string description;
+        internal IDomainEventManager DomainEventManager { get; private set; }
 
         public Guid Id { get; set; }
         public string Name { get; protected set; }
@@ -54,7 +55,10 @@ namespace Kirschhock.HTIYC.Domain
         /// Used for Mapping Only
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public Topic() { }
+        public Topic(IDomainEventManager eventManager)
+        {
+            this.DomainEventManager = eventManager;
+        }
 
         public Topic(string displayName)
         {
@@ -88,16 +92,6 @@ namespace Kirschhock.HTIYC.Domain
             await DomainEventManager.RaiseEventAsync(new UpdateTopicCommand(this));
         }
 
-        /// <summary>
-        /// Creates a new <see cref="Topic"/> And raises the correlated event(s)
-        /// </summary>
-        public static async Task<Topic> NewTopic(string displayName)
-        {
-            var topic = new Topic(displayName);
-            await DomainEventManager.RaiseEventAsync(new AddTopicCommand(topic));
-            return topic;
-        }
-
         [EditorBrowsable(EditorBrowsableState.Never)]
         public Topic Set(Guid id, string name, string displayName, string description, List<Fact> facts)
         {
@@ -105,6 +99,7 @@ namespace Kirschhock.HTIYC.Domain
             Name = name;
             this.displayName = displayName;
             this.description = description;
+            facts?.ForEach(fact => fact.SetAggregateRoot(this, DomainEventManager));
             Facts = facts;
 
             return this;

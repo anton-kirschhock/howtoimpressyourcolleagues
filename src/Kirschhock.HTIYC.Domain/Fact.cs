@@ -12,6 +12,9 @@ namespace Kirschhock.HTIYC.Domain
         private string title;
         private string description;
         private string readMoreLink;
+
+        internal IDomainEventManager DomainEventManager { get; private set; }
+
         public Guid Id { get; set; }
         public string Name { get; protected set; }
 
@@ -60,7 +63,9 @@ namespace Kirschhock.HTIYC.Domain
         /// FOR MAPPING ONLY
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public Fact() { }
+        public Fact()
+        {
+        }
         /// <summary>
         /// Creates a new fact for a <see cref="Topic"/>
         /// </summary>
@@ -76,6 +81,7 @@ namespace Kirschhock.HTIYC.Domain
                 throw new ArgumentException($"'{nameof(title)}' cannot be null or whitespace.", nameof(title));
             Id = Guid.NewGuid();
             Topic = topic ?? throw new ArgumentNullException(nameof(topic));
+            DomainEventManager = topic.DomainEventManager;
             Name = name;
             this.title = title;
         }
@@ -96,19 +102,33 @@ namespace Kirschhock.HTIYC.Domain
         /// <param name="readMoreLink"></param>
         /// <returns></returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public Fact Set(Topic topic,
-                        Guid id,
+        public Fact Set(Guid id,
                         string name,
                         string title,
                         string description,
                         string readMoreLink)
         {
             Id = id;
-            Topic = topic;
             Name = name;
             this.title = title;
             this.description = description;
             this.readMoreLink = readMoreLink;
+
+            return this;
+        }
+
+
+        /// <summary>
+        /// ONLY USE DURING MAPPING!
+        /// </summary>
+        /// <param name="topic"></param>
+        /// <param name="domainEventManager"></param>
+        /// <returns></returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public Fact SetAggregateRoot(Topic topic, IDomainEventManager domainEventManager)
+        {
+            Topic = topic;
+            DomainEventManager = domainEventManager;
 
             return this;
         }

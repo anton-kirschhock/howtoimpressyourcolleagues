@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Threading.Tasks;
 
+using Kirschhock.HTIYC.Domain;
 using Kirschhock.HTIYC.Infrastructure.DbModels;
 using Kirschhock.HTIYC.Infrastructure.MongoDb;
 
@@ -22,7 +23,8 @@ namespace Kirschhock.HTIYC.Infrastructure.IntegrationTests
                 .Build();
 
             var serviceCollection = new ServiceCollection()
-                .AddInfrastructure(dbOpt => configuration.GetSection("database").Bind(dbOpt));
+                .AddInfrastructure(dbOpt => configuration.GetSection("database").Bind(dbOpt))
+                .AddDomain();
 
             var nonScopedSp = serviceCollection.BuildServiceProvider();
             scope = BeginServiceScope(nonScopedSp);
@@ -67,10 +69,9 @@ namespace Kirschhock.HTIYC.Infrastructure.IntegrationTests
                         Description = $"A test Fact with idx {j} for topic {i}",
                         ReadMoreLink = "https://kirschhock.com",
                         Title = $"Fact {i}-{j}",
-                        TopicId = topic.Id
                     };
                     await dbContext.Facts.InsertOneAsync(fact);
-                    topic.Facts.Add(fact.Id);
+                    topic.Facts.Add(fact);
 
                 }
                 await dbContext.Topics.InsertOneAsync(topic);

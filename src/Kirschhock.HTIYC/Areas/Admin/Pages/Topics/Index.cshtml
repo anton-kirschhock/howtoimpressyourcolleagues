@@ -28,7 +28,9 @@
             @foreach (var topic in Model.Items)
             {
                 <tr>
-                    <td>@topic.Id</td>
+                    <td>
+                        <a asp-page="Edit" asp-route-Id="@topic.Id">@topic.Id</a>
+                    </td>
                     <td>@topic.DisplayName <small>(@topic.Name)</small></td>
                     <td>@topic.Description</td>
                     <td>@topic?.Facts?.Count() ?? 0</td>

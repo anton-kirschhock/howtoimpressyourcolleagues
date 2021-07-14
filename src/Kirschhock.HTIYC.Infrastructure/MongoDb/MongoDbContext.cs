@@ -19,7 +19,6 @@ namespace Kirschhock.HTIYC.Infrastructure.MongoDb
         public IMongoDatabase Database { get; }
 
         public IMongoCollection<TopicDTO> Topics => Database.GetCollection<TopicDTO>(nameof(TopicDTO));
-        public IMongoCollection<FactDTO> Facts => Database.GetCollection<FactDTO>(nameof(FactDTO));
 
 
         public MongoDbContext(MongoDbClientFactory clientFactory, IOptions<DatabaseConfiguration> databaseOptions)

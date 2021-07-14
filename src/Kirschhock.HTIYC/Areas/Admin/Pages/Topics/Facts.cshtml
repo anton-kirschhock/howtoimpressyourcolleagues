@@ -1,0 +1,45 @@
+﻿@page "{TopicId:Guid}"
+@model Kirschhock.HTIYC.Areas.Admin.Pages.Topics.FactsModel
+@{
+}
+
+@section TitleContent {
+    Facts for topic @Model.TopicId
+}
+
+@section Toolbar{
+    <div class="btn-group me-2">
+        <a asp-page="AddFact" asp-route-TopicId="@Model.TopicId" class="btn btn-sm btn-outline-success">Add</a>
+    </div>
+}
+<div class="btn-group me-2">
+    <a asp-page="Index" class="btn btn-sm btn-outline-primary">Back to Topic overivew</a>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-striped table-sm">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Count Topics</th>
+                <th>Options</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var fact in Model.Facts)
+            {
+                <tr>
+                    <td>
+                        <a asp-page="EditFact" asp-route-TopicId="@Model.TopicId" asp-route-FactId="@fact.Id">@fact.Id</a>
+                    </td>
+                    <td>(@fact.Name)</td>
+                    <td>@fact.Title</td>
+                    <td>@fact.ReadMoreLink</td>
+                    <td>@fact.Description</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

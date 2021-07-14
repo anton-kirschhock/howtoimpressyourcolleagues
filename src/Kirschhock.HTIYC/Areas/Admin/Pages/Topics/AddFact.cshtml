@@ -1,0 +1,39 @@
+﻿@page
+@model Kirschhock.HTIYC.Areas.Admin.Pages.Topics.AddFactModel
+@{
+}
+
+
+@section TitleContent {
+    Create new Fact
+}
+
+@section Toolbar{
+    <div class="btn-group me-2">
+        <a asp-page="Facts" class="btn btn-sm btn-warning">Cancel</a>
+    </div>
+}
+
+<form method="post" class="submittable-form">
+    <div class="form-floating mt-3">
+        <input type="text" class="form-control" asp-for="Name">
+        <label asp-for="Name">Name</label>
+    </div>
+
+    <div class="form-floating mt-3">
+        <input type="text" class="form-control" asp-for="Title">
+        <label asp-for="Title">Title</label>
+    </div>
+
+    <div class="form-floating mt-3">
+        <input type="text" class="form-control" asp-for="ReadMoreLink">
+        <label asp-for="ReadMoreLink">ReadMoreLink</label>
+    </div>
+
+    <div class="form-floating mt-3">
+        <textarea class="form-control" asp-for="Description" style="height:10em"></textarea>
+        <label asp-for="Description">Description</label>
+    </div>
+
+    <button class="btn btn-success  mt-3">Save</button>
+</form>

@@ -35,6 +35,7 @@
                     <td>@topic.Description</td>
                     <td>@topic?.Facts?.Count() ?? 0</td>
                     <td>
+                        <a asp-page="Facts" asp-route-TopicId="@topic.Id">Manage facts</a>
                     </td>
                 </tr>
             }

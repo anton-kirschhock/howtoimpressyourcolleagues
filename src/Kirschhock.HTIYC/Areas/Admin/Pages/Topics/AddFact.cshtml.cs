@@ -58,7 +58,7 @@ namespace Kirschhock.HTIYC.Areas.Admin.Pages.Topics
                 fact.ReadMoreLink = ReadMoreLink;
                 fact.Description = Description;
 
-                return RedirectToAction("Facts", new { TopicId });
+                return RedirectToPage("Facts", new { TopicId });
             }
             return Page();
 

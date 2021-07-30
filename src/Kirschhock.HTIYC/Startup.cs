@@ -31,6 +31,8 @@ namespace Kirschhock.HTIYC
                 opt => Configuration.GetSection("Security").Bind(opt)
             );
 
+            services.AddControllers()
+                .AddJsonOptions(opt => opt.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve);
             services.AddRazorPages(options =>
             {
                 options.Conventions.AuthorizeAreaFolder("admin", "/", GlobalConstants.Policies.Admin);
@@ -62,6 +64,7 @@ namespace Kirschhock.HTIYC
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapRazorPages();
+                endpoints.MapControllers();
             });
         }
     }

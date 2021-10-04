@@ -18,6 +18,12 @@ export interface Fact {
 export class IndexPageModel {
   private readonly baseUrl = `${window.location.origin}/api/facts`;
 
+  private get BannerTitle(): HTMLHeadingElement {
+    return document.querySelector("#banner-title") as HTMLHeadingElement;
+  }
+  private get BoxContainer(): HTMLDivElement {
+    return document.querySelector("div.box-container") as HTMLDivElement;
+  }
   private get RenderArea(): HTMLDivElement {
     return document.querySelector("div#renderArea") as HTMLDivElement;
   }
@@ -25,17 +31,21 @@ export class IndexPageModel {
     return document.querySelector("button#btnNextFact") as HTMLButtonElement;
   }
 
-  constructor() {
+  constructor(private isFirst = true) {
     this.NextFact.onclick = (event) => this.OnNextFact(event);
   }
 
   private async OnNextFact(event: Event) {
     event.preventDefault();
+    this.isFirst = false;
 
     try {
       const resp = await fetch(`${this.baseUrl}/random`);
       const jsonBody = (await resp.json()) as Fact;
       console.log(jsonBody);
+      this.BoxContainer.classList.remove("before-first-time-click");
+      this.BannerTitle.innerText = "Impress them with this:";
+      this.NextFact.innerText = "Let's Continue inpressing!";
       this.renderFact(jsonBody);
     } catch (err) {
       console.error(
@@ -52,19 +62,24 @@ export class IndexPageModel {
 
     const p = document.createElement("p") as HTMLParagraphElement;
     p.innerText = fact.title;
+    p.classList.add("title");
+
     const ul = document.createElement("ul") as HTMLUListElement;
 
-    const id = document.createElement("li") as HTMLLIElement;
-    id.innerText = `#${fact.id}`;
-    ul.appendChild(id);
+    if (fact.description !== undefined && fact.description != null) {
+      const descr = document.createElement("li") as HTMLLIElement;
+      descr.innerText = `${fact.description}`;
+      descr.classList.add("description");
+      ul.appendChild(descr);
+    }
 
-    const descr = document.createElement("li") as HTMLLIElement;
-    descr.innerText = `Description: ${fact.description}`;
-    ul.appendChild(descr);
-
-    const timeStamp = document.createElement("li") as HTMLLIElement;
-    timeStamp.innerText = `${new Date()}`;
-    ul.appendChild(timeStamp);
+    if (fact.readMoreLink) {
+      const readMore = document.createElement("a") as HTMLAnchorElement;
+      readMore.href = fact.readMoreLink;
+      readMore.classList.add("read-more");
+      readMore.text = "Read more";
+      ul.appendChild(readMore);
+    }
 
     this.RenderArea.appendChild(p);
     this.RenderArea.appendChild(ul);

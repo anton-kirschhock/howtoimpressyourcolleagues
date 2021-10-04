@@ -18,7 +18,7 @@ module.exports = {
     },
     output: {
         filename: "bundle.js",
-        path: path.resolve(__dirname, "wwwroot/js"),
+        path: path.resolve(__dirname, "./wwwroot/js"),
     },
 };
 //# sourceMappingURL=webpack.config.js.map

@@ -39,11 +39,27 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.IndexPageModel = void 0;
 require("core-js/modules/es.promise");
 var IndexPageModel = /** @class */ (function () {
-    function IndexPageModel() {
+    function IndexPageModel(isFirst) {
         var _this = this;
+        if (isFirst === void 0) { isFirst = true; }
+        this.isFirst = isFirst;
         this.baseUrl = window.location.origin + "/api/facts";
         this.NextFact.onclick = function (event) { return _this.OnNextFact(event); };
     }
+    Object.defineProperty(IndexPageModel.prototype, "BannerTitle", {
+        get: function () {
+            return document.querySelector("#banner-title");
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(IndexPageModel.prototype, "BoxContainer", {
+        get: function () {
+            return document.querySelector("div.box-container");
+        },
+        enumerable: false,
+        configurable: true
+    });
     Object.defineProperty(IndexPageModel.prototype, "RenderArea", {
         get: function () {
             return document.querySelector("div#renderArea");
@@ -65,6 +81,7 @@ var IndexPageModel = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         event.preventDefault();
+                        this.isFirst = false;
                         _a.label = 1;
                     case 1:
                         _a.trys.push([1, 4, , 5]);
@@ -75,6 +92,9 @@ var IndexPageModel = /** @class */ (function () {
                     case 3:
                         jsonBody = (_a.sent());
                         console.log(jsonBody);
+                        this.BoxContainer.classList.remove("before-first-time-click");
+                        this.BannerTitle.innerText = "Impress them with this:";
+                        this.NextFact.innerText = "Let's Continue inpressing!";
                         this.renderFact(jsonBody);
                         return [3 /*break*/, 5];
                     case 4:
@@ -87,24 +107,26 @@ var IndexPageModel = /** @class */ (function () {
         });
     };
     IndexPageModel.prototype.renderFact = function (fact) {
-        if (this.RenderArea.hasChildNodes()) {
-            for (var i = 0; i < this.RenderArea.childElementCount; i++) {
-                var element = this.RenderArea.children[i];
-                element.remove();
-            }
+        while (this.RenderArea.firstChild != null) {
+            this.RenderArea.removeChild(this.RenderArea.firstChild);
         }
         var p = document.createElement("p");
         p.innerText = fact.title;
+        p.classList.add("title");
         var ul = document.createElement("ul");
-        var id = document.createElement("li");
-        id.innerText = "#" + fact.id;
-        ul.appendChild(id);
-        var descr = document.createElement("li");
-        descr.innerText = "Description: " + fact.description;
-        ul.appendChild(descr);
-        var timeStamp = document.createElement("li");
-        timeStamp.innerText = "" + new Date();
-        ul.appendChild(timeStamp);
+        if (fact.description !== undefined && fact.description != null) {
+            var descr = document.createElement("li");
+            descr.innerText = "" + fact.description;
+            descr.classList.add("description");
+            ul.appendChild(descr);
+        }
+        if (fact.readMoreLink) {
+            var readMore = document.createElement("a");
+            readMore.href = fact.readMoreLink;
+            readMore.classList.add("read-more");
+            readMore.text = "Read more";
+            ul.appendChild(readMore);
+        }
         this.RenderArea.appendChild(p);
         this.RenderArea.appendChild(ul);
     };

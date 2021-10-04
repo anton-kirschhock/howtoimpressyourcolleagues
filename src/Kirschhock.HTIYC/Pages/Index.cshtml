@@ -4,12 +4,13 @@
     ViewData["Title"] = "Home page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">I want to impress my collegues</h1>
-    <div id="renderArea"></div>
-    <button id="btnNextFact">Next</button>
+<div class="box-container before-first-time-click">
+    <div class="text-center fact-box shadow p-3 mb-5 bg-body rounded">
+        <h1 class="display-4" id="banner-title">I want to impress my collegues!</h1>
+        <div id="renderArea"></div>
+        <button class="btn btn-primary" id="btnNextFact">Let's get started!</button>
+    </div>
 </div>
-
 <script>var exports = {};</script>
-<script src="js/bundle.js"></script>
+<script src="~/js/bundle.js"></script>
 <link rel="stylesheet" type="text/css" href="~/css/app.css" />

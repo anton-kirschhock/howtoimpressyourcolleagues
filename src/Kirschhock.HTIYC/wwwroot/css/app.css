@@ -1,0 +1,54 @@
+.box-container {
+  position: absolute;
+  height: 100vh;
+  width: 100vw;
+  left: 0;
+  top: 0;
+  display: flex;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+  background-color: #f1f1f1;
+}
+
+.box-container.before-first-time-click button#btnNextFact {
+  height: 75%;
+  width: 100%;
+}
+
+.fact-box {
+  height: 50vh;
+  width: 70vw;
+}
+
+#renderArea {
+}
+
+#renderArea > p {
+}
+
+#renderArea > ul {
+  list-style: none;
+}
+
+#renderArea > ul > li {
+}
+
+.read-more {
+}
+
+.title {
+  font-size: 50pt;
+}
+.description {
+}
+
+#btnNextFact {
+}
+
+footer.footer.text-muted {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+}

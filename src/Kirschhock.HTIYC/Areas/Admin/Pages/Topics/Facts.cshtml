@@ -8,9 +8,9 @@
 }
 
 @section Toolbar{
-    <div class="btn-group me-2">
-        <a asp-page="AddFact" asp-route-TopicId="@Model.TopicId" class="btn btn-sm btn-outline-success">Add</a>
-    </div>
+<div class="btn-group me-2">
+    <a asp-page="AddFact" asp-route-TopicId="@Model.TopicId" class="btn btn-sm btn-outline-success">Add</a>
+</div>
 }
 <div class="btn-group me-2">
     <a asp-page="Index" class="btn btn-sm btn-outline-primary">Back to Topic overivew</a>
@@ -22,9 +22,10 @@
             <tr>
                 <th>#</th>
                 <th>Name</th>
+                <th>Title</th>
+                <th>Read more link</th>
                 <th>Description</th>
-                <th>Count Topics</th>
-                <th>Options</th>
+                <th> </th>
             </tr>
         </thead>
         <tbody>
@@ -34,10 +35,13 @@
                     <td>
                         <a asp-page="EditFact" asp-route-TopicId="@Model.TopicId" asp-route-FactId="@fact.Id">@fact.Id</a>
                     </td>
-                    <td>(@fact.Name)</td>
+                    <td>@fact.Name</td>
                     <td>@fact.Title</td>
                     <td>@fact.ReadMoreLink</td>
                     <td>@fact.Description</td>
+                    <td>
+                        <a asp-page="DeleteFact" asp-route-TopicId="@Model.TopicId" asp-route-Id="@fact.Id">Delete fact</a>
+                    </td>
                 </tr>
             }
         </tbody>

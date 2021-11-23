@@ -39,6 +39,7 @@ namespace Kirschhock.HTIYC.Areas.Admin.Pages.Topics
                 var topic = await topicFactory.CreateAsync();
                 topic.DisplayName = DisplayName;
                 topic.Description = Description;
+                await Task.Delay(5000);
 
                 return RedirectToPage("Index");
             }

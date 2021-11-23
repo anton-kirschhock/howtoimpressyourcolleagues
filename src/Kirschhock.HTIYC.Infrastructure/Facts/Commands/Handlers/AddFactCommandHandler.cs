@@ -10,7 +10,7 @@ using Kirschhock.HTIYC.Infrastructure.MongoDb;
 
 using MongoDB.Driver;
 
-namespace Kirschhock.HTIYC.Infrastructure.Facts.CommandHandlers
+namespace Kirschhock.HTIYC.Infrastructure.Facts.Handlers
 {
     internal class AddFactCommandHandler : ICommandHandler<AddFactCommand>
     {

@@ -28,40 +28,45 @@ namespace Kirschhock.HTIYC.Infrastructure.Facts.Query.Handlers
             this.context = context;
             this.topicFactory = topicFactory;
         }
+        class SimplifiedTopic
+        {
+            public string Name { get; set; }
+        }
 
-        public async Task<IQueryable<Fact>> Handle(RandomFactQuery request, CancellationToken cancellationToken)
+        public Task<IQueryable<Fact>> Handle(RandomFactQuery request, CancellationToken cancellationToken)
         {
             var topicTitle = request.Topic;
             if (string.IsNullOrWhiteSpace(topicTitle))
             {
-                var allTopics = await context.Topics.Find(Builders<TopicDTO>.Filter.Empty)
-                                                     .Project(Builders<TopicDTO>.Projection.Expression(e => new { e.Name }))
-                                                     .ToListAsync(cancellationToken: cancellationToken);
+                var allTopics = context.Topics.FindSync(Builders<TopicDTO>.Filter.Empty,
+                                                        new FindOptions<TopicDTO, SimplifiedTopic>()
+                                                        {
+                                                            Projection = Builders<TopicDTO>.Projection.Expression(e => new SimplifiedTopic { Name = e.Name })
+                                                        }
+                                                        ).ToList();
 
-                topicTitle = allTopics.ElementAt(new Random().Next(0, allTopics.Count-1)).Name;
+                topicTitle = allTopics.ElementAt(new Random().Next(0, Math.Max(0, allTopics.Count - 1))).Name;
             }
 
             var filter = Builders<TopicDTO>.Filter.Where(e => e.Name.ToLower() == topicTitle.ToLower());
             var projection = Builders<TopicDTO>.Projection
-                                               .Expression(e => new
+                                               .Expression(e => new TopicDTO
                                                {
-                                                   e.Id,
-                                                   e.Name,
-                                                   e.DisplayName,
-                                                   e.Description,
-                                                   Facts = e.Facts.Select(fact => new
+                                                   Id = e.Id,
+                                                   Name = e.Name,
+                                                   DisplayName = e.DisplayName,
+                                                   Description = e.Description,
+                                                   Facts = e.Facts.Select(fact => new FactDTO
                                                    {
-                                                       fact.Id,
-                                                       fact.Name,
-                                                       fact.Title,
-                                                       fact.Description,
-                                                       fact.ReadMoreLink,
-                                                   })
+                                                       Id = fact.Id,
+                                                       Name = fact.Name,
+                                                       Title = fact.Title,
+                                                       Description = fact.Description,
+                                                       ReadMoreLink = fact.ReadMoreLink,
+                                                   }).ToList()
                                                });
 
-            var res = await context.Topics.Find(filter)
-                                                 .Project(projection)
-                                                 .ToListAsync(cancellationToken: cancellationToken);
+            var res = context.Topics.FindSync(filter, new FindOptions<TopicDTO, TopicDTO>() { Projection = projection }).ToList();
 
             var topic = res.Select(e => topicFactory.CreateBlank().Set(e.Id,
                                                                   e.Name,
@@ -74,10 +79,14 @@ namespace Kirschhock.HTIYC.Infrastructure.Facts.Query.Handlers
                                                                                                         fact.ReadMoreLink)).ToList()
                                                                   ))
                         .FirstOrDefault();
-            
-            var randomFact = topic.Facts.ElementAt(new Random().Next(0, topic.Facts.Count-1));
 
-            return new List<Fact>() { randomFact }.AsQueryable();
+            var indexedCount = (topic.Facts?.Count - 1);
+            Fact randomFact = null;
+
+            if (indexedCount != null && indexedCount >= 0)
+                randomFact = topic?.Facts?.ElementAt(new Random().Next(0, Math.Max(0, indexedCount.Value)));
+
+            return Task.FromResult(new List<Fact>() { randomFact }.AsQueryable());
         }
     }
 }

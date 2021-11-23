@@ -8,9 +8,9 @@
 }
 
 @section Toolbar{
-    <div class="btn-group me-2">
-        <a asp-page="Add" class="btn btn-sm btn-outline-success">Add</a>
-    </div>
+<div class="btn-group me-2">
+    <a asp-page="Add" class="btn btn-sm btn-outline-success">Add</a>
+</div>
 }
 
 <div class="table-responsive">
@@ -20,8 +20,7 @@
                 <th>#</th>
                 <th>Display Name <small>(Name)</small></th>
                 <th>Description</th>
-                <th>Count Topics</th>
-                <th>Options</th>
+                <th colspan="2">Options</th>
             </tr>
         </thead>
         <tbody>
@@ -31,11 +30,19 @@
                     <td>
                         <a asp-page="Edit" asp-route-Id="@topic.Id">@topic.Id</a>
                     </td>
-                    <td>@topic.DisplayName <small>(@topic.Name)</small></td>
+                    <td>
+                        @topic.DisplayName
+                        @if (!string.IsNullOrWhiteSpace(topic.Name))
+                        {
+                            <small>(@topic.Name)</small>
+                        }
+                    </td>
                     <td>@topic.Description</td>
-                    <td>@topic?.Facts?.Count() ?? 0</td>
                     <td>
                         <a asp-page="Facts" asp-route-TopicId="@topic.Id">Manage facts</a>
+                    </td>
+                    <td>
+                        <a asp-page="Delete" asp-route-TopicId="@topic.Id">Delete Topic</a>
                     </td>
                 </tr>
             }

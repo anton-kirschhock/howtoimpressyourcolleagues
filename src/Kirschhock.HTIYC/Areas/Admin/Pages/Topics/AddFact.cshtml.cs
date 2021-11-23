@@ -58,6 +58,7 @@ namespace Kirschhock.HTIYC.Areas.Admin.Pages.Topics
                 fact.ReadMoreLink = ReadMoreLink;
                 fact.Description = Description;
 
+                await Task.Delay(1000);
                 return RedirectToPage("Facts", new { TopicId });
             }
             return Page();

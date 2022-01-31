@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 
 using Kirschhock.HTIYC.Domain;
-using Kirschhock.HTIYC.Domain.Factories;
+using Kirschhock.HTIYC.Domain.DomainEvents.Topics;
 
 using MediatR;
 
@@ -14,7 +14,6 @@ namespace Kirschhock.HTIYC.Areas.Admin.Pages.Topics
     public class AddModel : PageModel
     {
         private readonly IMediator mediator;
-        private readonly IAggregateFactory<Topic> topicFactory;
 
         [Required]
         [BindProperty]
@@ -24,10 +23,9 @@ namespace Kirschhock.HTIYC.Areas.Admin.Pages.Topics
         [BindProperty]
         public string Description { get; set; }
 
-        public AddModel(IMediator mediator, IAggregateFactory<Topic> topicFactory)
+        public AddModel(IMediator mediator)
         {
             this.mediator = mediator;
-            this.topicFactory = topicFactory;
         }
 
         public void OnGet() { }
@@ -36,10 +34,9 @@ namespace Kirschhock.HTIYC.Areas.Admin.Pages.Topics
         {
             if (ModelState.IsValid)
             {
-                var topic = await topicFactory.CreateAsync();
-                topic.DisplayName = DisplayName;
+                var topic = new Topic(DisplayName);
                 topic.Description = Description;
-                await Task.Delay(5000);
+                await mediator.Publish(new AddTopicCommand(topic));
 
                 return RedirectToPage("Index");
             }

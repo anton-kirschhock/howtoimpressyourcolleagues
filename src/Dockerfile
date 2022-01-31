@@ -9,11 +9,7 @@ RUN dotnet restore "Kirschhock.HTIYC/Kirschhock.HTIYC.csproj"
 RUN dotnet build "Kirschhock.HTIYC/Kirschhock.HTIYC.csproj" -c Release
 RUN dotnet publish "Kirschhock.HTIYC/Kirschhock.HTIYC.csproj" -c Release -o /app/publish
 
-################
-## Build JS app ###
-################
-
-##############
+#############
 ## Host App ##
 ##############
 FROM mcr.microsoft.com/dotnet/aspnet:5.0 

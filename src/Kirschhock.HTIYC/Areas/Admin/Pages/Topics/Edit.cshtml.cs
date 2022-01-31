@@ -2,6 +2,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 
+using Kirschhock.HTIYC.Domain.DomainEvents.Topics;
 using Kirschhock.HTIYC.Infrastructure.Topics.Queries;
 
 using MediatR;
@@ -38,6 +39,7 @@ namespace Kirschhock.HTIYC.Areas.Admin.Pages.Topics
 
             DisplayName = topic.DisplayName;
             Description = topic.Description;
+            await mediator.Send(new UpdateTopicCommand(topic));
 
             return Page();
 

@@ -2,6 +2,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 
+using Kirschhock.HTIYC.Domain.DomainEvents.Facts;
 using Kirschhock.HTIYC.Infrastructure.Topics.Queries;
 
 using MediatR;
@@ -57,6 +58,8 @@ namespace Kirschhock.HTIYC.Areas.Admin.Pages.Topics
                 var fact = await topic.AddFactAsync(Name, Title);
                 fact.ReadMoreLink = ReadMoreLink;
                 fact.Description = Description;
+
+                await mediator.Publish(new AddFactCommand(topic, fact));
 
                 await Task.Delay(1000);
                 return RedirectToPage("Facts", new { TopicId });

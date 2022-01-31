@@ -2,30 +2,25 @@ using System.Threading;
 using System.Threading.Tasks;
 
 using Kirschhock.HTIYC.Common.Abstractions;
-using Kirschhock.HTIYC.Domain;
 using Kirschhock.HTIYC.Domain.DomainEvents.Topics;
-using Kirschhock.HTIYC.Infrastructure.DbModels;
-using Kirschhock.HTIYC.Infrastructure.DbModels.Mappings.Abstractions;
-using Kirschhock.HTIYC.Infrastructure.MongoDb;
 
 namespace Kirschhock.HTIYC.Infrastructure.Topics.CommandHandlers
 {
     internal class AddTopicCommandHandler : ICommandHandler<AddTopicCommand>
     {
-        private readonly MongoDbContext mongoDbContext;
-        private readonly IMapper<Topic, TopicDTO> mapper;
+        private readonly HTIYCContext context;
 
-        public AddTopicCommandHandler(MongoDbContext mongoDbContext,
-                                      IMapper<Topic, TopicDTO> mapper)
+        public AddTopicCommandHandler(HTIYCContext context)
         {
-            this.mongoDbContext = mongoDbContext;
-            this.mapper = mapper;
+            this.context = context;
         }
 
-        public async Task Handle(AddTopicCommand notification, CancellationToken cancellationToken)
+        public Task Handle(AddTopicCommand notification, CancellationToken cancellationToken)
         {
-            var dto = await mapper.MapAsync(notification.Topic);
-            mongoDbContext.Topics.InsertOne(dto);
+            context.Topics.Add(notification.Topic);
+            context.SaveChanges();
+
+            return Task.CompletedTask;
         }
     }
 }

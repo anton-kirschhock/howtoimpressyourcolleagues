@@ -1,26 +1,24 @@
 version: '3.7'
 
 volumes:
-    mongodata:
-
+    dbData: null
 services:
     mongo:
-        image: mongo
+        image: postgres
         restart: always
         environment:
-            MONGO_INITDB_ROOT_USERNAME: root
-            MONGO_INITDB_ROOT_PASSWORD: ${PASSWORD}
+            - POSTGRES_USER=postgres
+            - POSTGRES_PASSWORD=postgres
+        ports:
+            - '5432:5432'
         volumes:
-            - mongodata:/data/db
-        ports:
-            - 27017:27017
-    mongo-express:
-        image: mongo-express
+            - dbData:/var/lib/postgresql/data
+
+    pgadmin:
+        image: dpage/pgadmin4
         restart: always
+        environment:
+            - PGADMIN_DEFAULT_EMAIL=postgres1@localhost.localhost
+            - PGADMIN_DEFAULT_PASSWORD=postgres
         ports:
-            - 8081:8081
-        environment: 
-            ME_CONFIG_MONGODB_ADMINUSERNAME: root
-            ME_CONFIG_MONGODB_ADMINPASSWORD: ${PASSWORD}
-        depends_on: 
-            - mongo
+            - '5050:80'

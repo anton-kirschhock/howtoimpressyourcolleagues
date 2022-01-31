@@ -3,8 +3,6 @@ using System.Threading;
 using System.Threading.Tasks;
 
 using Kirschhock.HTIYC.Common.Abstractions;
-using Kirschhock.HTIYC.Infrastructure.DbModels;
-using Kirschhock.HTIYC.Infrastructure.MongoDb;
 
 using MongoDB.Driver;
 
@@ -12,21 +10,21 @@ namespace Kirschhock.HTIYC.Infrastructure.Topics.Commands.Handlers
 {
     internal class DeleteTopicCommandHandler : ICommandHandler<DeleteTopicCommand, bool>
     {
-        private readonly MongoDbContext context;
+        private readonly HTIYCContext context;
 
-        public DeleteTopicCommandHandler(MongoDbContext context)
+        public DeleteTopicCommandHandler(HTIYCContext context)
         {
             this.context = context;
         }
 
         public async Task<bool> Handle(DeleteTopicCommand request, CancellationToken cancellationToken)
         {
-            var filter = Builders<TopicDTO>.Filter.Where(e => e.Id == request.TopicId);
+            var topic = context.Topics.FirstOrDefault(e => e.Id == request.TopicId);
+            if (topic == null)
+                return false;
 
-            var topic = (await context.Topics.FindAsync(filter, cancellationToken: cancellationToken)).FirstOrDefault(cancellationToken);
-            if (topic == null) return false;
-
-            await context.Topics.DeleteOneAsync(filter, cancellationToken: cancellationToken);
+            context.Topics.Remove(topic);
+            await context.SaveChangesAsync();
 
             return true;
         }

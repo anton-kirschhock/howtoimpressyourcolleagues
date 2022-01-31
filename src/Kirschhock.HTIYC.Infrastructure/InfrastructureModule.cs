@@ -2,13 +2,10 @@
 
 using Kirschhock.HTIYC.Domain;
 using Kirschhock.HTIYC.Infrastructure.Configuration;
-using Kirschhock.HTIYC.Infrastructure.DbModels;
-using Kirschhock.HTIYC.Infrastructure.DbModels.Mappings;
-using Kirschhock.HTIYC.Infrastructure.DbModels.Mappings.Abstractions;
-using Kirschhock.HTIYC.Infrastructure.MongoDb;
 
 using MediatR;
 
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 
@@ -33,28 +30,18 @@ namespace Kirschhock.HTIYC.Infrastructure
             // Configure all Configurations
             serviceDescriptors.Configure(configureDatabase);
 
+            serviceDescriptors.AddDbContext<HTIYCContext>((ctx, opt) =>
+            {
+                opt.UseNpgsql(ctx.GetRequiredService<IOptions<DatabaseConfiguration>>().Value.ConnectionString, dbOpt =>
+                {
+                });
+            });
+
             // Configure MediatR
             serviceDescriptors.AddMediatR(typeof(InfrastructureModule).Assembly);
 
-            // Configure mappers
-            serviceDescriptors.AddScoped<IMapper<Fact, FactDTO>, FactDtoMapper>();
-            serviceDescriptors.AddScoped<IMapper<Topic, TopicDTO>, TopicDtoMapper>();
-
             // Add own modules
             serviceDescriptors.AddDomain();
-
-            // Custom Services
-            serviceDescriptors.AddScoped<MongoDbContext>();
-
-            // Add Factories
-            serviceDescriptors.AddScoped<MongoDbClientFactory>((sp) =>
-            {
-                return () =>
-                {
-                    var options = sp.GetRequiredService<IOptions<DatabaseConfiguration>>();
-                    return new MongoClient(options.Value.ConnectionString);
-                };
-            });
 
             return serviceDescriptors;
         }
